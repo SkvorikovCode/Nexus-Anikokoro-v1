@@ -17,4 +17,23 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'https://shikimori.one',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+        configure: (proxy, options) => {
+          proxy.on('proxyReq', (proxyReq, req, res) => {
+            proxyReq.setHeader('User-Agent', 'NexusAnikokoro/1.0');
+          });
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Cache-Control': 'no-cache'
+        }
+      }
+    }
+  }
 })

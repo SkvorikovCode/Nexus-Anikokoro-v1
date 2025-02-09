@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Запускаем скрипт обновления версии
+node scripts/version-bump.js
+
+# Добавляем package.json в коммит, если он был изменен
+git add package.json 
