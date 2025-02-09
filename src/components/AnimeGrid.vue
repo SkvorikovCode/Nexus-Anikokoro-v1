@@ -89,50 +89,85 @@ import { useDebounce } from '@vueuse/core';
 
 const store = useAnimeStore();
 const searchQuery = ref('');
-const debouncedSearch = useDebounce(searchQuery, 200); // Уменьшаем задержку поиска
+const debouncedSearch = useDebounce(searchQuery, 300);
 
 // Получаем состояние из хранилища
-const {
-  animeList,
-  loading,
-  error,
-  currentPage,
-  totalPages,
-  hasNextPage,
-  hasPrevPage,
-  fetchAnimeList,
-  searchAnime
-} = store;
+const animeList = ref([]);
+const loading = ref(true);
+const error = ref(null);
+const currentPage = ref(1);
+const totalPages = ref(1);
+const hasNextPage = ref(false);
+const hasPrevPage = ref(false);
 
 // Загрузка данных при монтировании
 onMounted(async () => {
-  if (!animeList.value?.length) {
-    await fetchAnimeList(1);
+  try {
+    const data = await store.fetchAnimeList(1);
+    animeList.value = data;
+    loading.value = false;
+  } catch (e) {
+    error.value = 'Ошибка при загрузке списка аниме';
+    loading.value = false;
   }
 });
 
 // Обработка поиска
 const handleSearch = async () => {
-  if (debouncedSearch.value) {
-    await searchAnime(debouncedSearch.value);
-  } else {
-    await fetchAnimeList(1);
+  if (!debouncedSearch.value) {
+    await store.fetchAnimeList(1);
+    return;
+  }
+
+  loading.value = true;
+  error.value = null;
+  
+  try {
+    const data = await store.searchAnime(debouncedSearch.value);
+    animeList.value = data;
+  } catch (e) {
+    error.value = 'Ошибка при поиске аниме';
+  } finally {
+    loading.value = false;
   }
 };
 
 // Очистка поиска
 const clearSearch = async () => {
   searchQuery.value = '';
-  await fetchAnimeList(1);
+  await store.fetchAnimeList(1);
 };
 
 // Повтор последней операции при ошибке
 const retryLastOperation = async () => {
   if (searchQuery.value) {
-    await searchAnime(searchQuery.value);
+    await store.searchAnime(searchQuery.value);
   } else {
-    await fetchAnimeList(currentPage.value);
+    await store.fetchAnimeList(currentPage.value);
   }
+};
+
+// Загрузка списка аниме
+const fetchAnimeList = async (page) => {
+  loading.value = true;
+  error.value = null;
+  
+  try {
+    const data = await store.fetchAnimeList(page);
+    animeList.value = data;
+    currentPage.value = page;
+    updatePagination();
+  } catch (e) {
+    error.value = 'Ошибка при загрузке списка аниме';
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Обновление пагинации
+const updatePagination = () => {
+  hasNextPage.value = currentPage.value < totalPages.value;
+  hasPrevPage.value = currentPage.value > 1;
 };
 
 // Пагинация

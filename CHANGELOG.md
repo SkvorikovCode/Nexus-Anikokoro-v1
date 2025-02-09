@@ -12,6 +12,31 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+
+
+
+
+## [0.1.17] - 2025-02-09
+
+No significant changes.
+
+## [0.1.16] - 2025-02-09
+
+No significant changes.
+
+## [0.1.15] - 2025-02-09
+
+No significant changes.
+
+## [0.1.14] - 2025-02-09
+
+No significant changes.
+
+## [0.1.13] - 2025-02-09
+
+- feat(core): initial project setup and environment configuration
+
 ## [0.1.12] - 2025-02-09
 
 - docs(readme): глобальное обновление описания проекта
