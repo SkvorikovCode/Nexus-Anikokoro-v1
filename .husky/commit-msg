@@ -21,5 +21,3 @@ if ! echo "$MSG" | grep -qE "$PATTERN"; then
   echo "Доступные типы: feat, fix, docs, style, refactor, test, chore"
   exit 1
 fi
-
-node scripts/commit-msg.js $1
