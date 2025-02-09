@@ -17,6 +17,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [0.1.18] - 2025-02-09
+
+- fix(docs): merger
+- Update README.md
+
 ## [0.1.17] - 2025-02-09
 
 No significant changes.
