@@ -9,6 +9,16 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+
+## [0.1.11] - 2025-02-09
+
+No significant changes.
+
+## [0.1.10] - 2025-02-09
+
+- fix(info): обновление информации
+
 ## [0.1.9] - 2025-02-09
 
 No significant changes.
