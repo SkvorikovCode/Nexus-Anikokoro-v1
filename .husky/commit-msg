@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Получаем сообщение коммита
+MSG=$(cat $1)
+
+# Паттерн для проверки формата
+# feat: описание - для новых функций
+# fix: описание - для исправлений
+# docs: описание - для документации
+# style: описание - для стилей
+# refactor: описание - для рефакторинга
+# test: описание - для тестов
+# chore: описание - для обслуживания
+PATTERN="^(feat|fix|docs|style|refactor|test|chore)(\([a-z]+\))?: .+"
+
+if ! echo "$MSG" | grep -qE "$PATTERN"; then
+  echo "❌ Неправильный формат сообщения коммита"
+  echo "Используйте формат: <тип>(<область>): <описание>"
+  echo "Пример: feat(api): добавлена новая функция"
+  echo "Доступные типы: feat, fix, docs, style, refactor, test, chore"
+  exit 1
+fi
+
+node scripts/commit-msg.js $1

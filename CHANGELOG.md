@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+
+
+## [0.1.7] - 2025-02-09
+
+No significant changes.
+
+## [0.1.6] - 2025-02-09
+
+No significant changes.
+
+## [0.1.5] - 2025-02-09
+
+- docs(version): добавлена документация по системе управления версиями
+
 ## [0.1.4] - 2025-02-09
 
 No significant changes.
