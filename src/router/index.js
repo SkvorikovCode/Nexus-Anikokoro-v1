@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import AnimeDetails from '../views/AnimeDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -8,21 +6,65 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: () => import('../views/Home.vue'),
+      meta: {
+        title: 'Главная'
+      }
     },
     {
       path: '/anime/:id',
       name: 'anime-details',
-      component: AnimeDetails
+      component: () => import('../views/AnimeDetails.vue'),
+      meta: {
+        title: 'Детали аниме'
+      }
+    },
+    {
+      path: '/search',
+      name: 'search',
+      component: () => import('../views/SearchView.vue'),
+      meta: {
+        title: 'Поиск'
+      }
+    },
+    {
+      path: '/categories',
+      name: 'categories',
+      component: () => import('../views/CategoriesView.vue'),
+      meta: {
+        title: 'Категории'
+      }
+    },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: () => import('../views/FavoritesView.vue'),
+      meta: {
+        title: 'Избранное'
+      }
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: () => import('../views/NotFoundView.vue'),
+      meta: {
+        title: 'Страница не найдена'
+      }
     }
   ],
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition;
+      return savedPosition
     } else {
-      return { top: 0 };
+      return { top: 0 }
     }
   }
+})
+
+// Обновление заголовка страницы
+router.beforeEach((to, from, next) => {
+  document.title = `${to.meta.title} | NexusAnikokoro`
+  next()
 })
 
 export default router

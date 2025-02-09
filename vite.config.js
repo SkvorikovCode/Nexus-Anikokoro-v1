@@ -3,35 +3,30 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueDevTools from 'vite-plugin-vue-devtools'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    vueDevTools(),
+    VueDevTools(),
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
-    },
+    }
   },
   server: {
-    port: 3000,
     proxy: {
       '/api': {
-        target: 'https://shikimori.one',
+        target: 'https://shikimori.one/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api'),
+        rewrite: (path) => path.replace(/^\/api/, ''),
         configure: (proxy, options) => {
           proxy.on('proxyReq', (proxyReq, req, res) => {
-            proxyReq.setHeader('User-Agent', 'NexusAnikokoro/1.0');
-          });
-        },
-        headers: {
-          'Accept': 'application/json',
-          'Cache-Control': 'no-cache'
+            proxyReq.setHeader('User-Agent', 'NexusAnikokoro')
+          })
         }
       }
     }

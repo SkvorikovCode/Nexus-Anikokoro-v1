@@ -1,17 +1,19 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { RouterView } from 'vue-router'
+import MainLayout from './components/layouts/MainLayout.vue'
 </script>
 
 <template>
-  <router-view v-slot="{ Component }">
-    <transition
-      name="page"
-      mode="out-in"
-    >
-      <component :is="Component" />
-    </transition>
-  </router-view>
+  <MainLayout>
+    <router-view v-slot="{ Component }">
+      <transition
+        name="page"
+        mode="out-in"
+      >
+        <component :is="Component" />
+      </transition>
+    </router-view>
+  </MainLayout>
 </template>
 
 <style>
@@ -31,6 +33,6 @@ import HelloWorld from './components/HelloWorld.vue'
 }
 
 body {
-  @apply bg-light text-dark;
+  @apply bg-gray-50 text-gray-900;
 }
 </style>

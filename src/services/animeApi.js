@@ -7,19 +7,41 @@ const BASE_URL = '/api';
 const cache = new Map();
 const CACHE_TIME = 5 * 60 * 1000; // 5 минут
 
+// Создаем клиент axios с базовой конфигурацией
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
+    'User-Agent': 'NexusAnikokoro',
     'Content-Type': 'application/json'
   },
-  timeout: 5000 // Уменьшаем таймаут до 5 секунд
+  timeout: 10000 // 10 секунд
 });
 
-// Добавляем перехватчик ответов для обработки ошибок
+// Добавляем перехватчик запросов
+api.interceptors.request.use(
+  (config) => {
+    // Добавляем заголовки для CORS
+    config.headers['Accept'] = 'application/json';
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Добавляем перехватчик ответов
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     console.error('API Error:', error.response?.data || error.message);
+    // Обработка специфических ошибок Shikimori API
+    if (error.response?.status === 429) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(api(error.config));
+        }, 1000);
+      });
+    }
     return Promise.reject(error);
   }
 );
@@ -41,7 +63,7 @@ const getCachedData = async (key, fetchFunction) => {
 
 export const animeApi = {
   // Получение списка аниме с пагинацией
-  getAnimeList: async (page = 1, limit = 12, order = 'popularity') => {
+  getAnimeList: async (page = 1, limit = 24, order = 'popularity') => {
     const cacheKey = `list_${page}_${limit}_${order}`;
     try {
       return await getCachedData(cacheKey, async () => {
@@ -52,7 +74,7 @@ export const animeApi = {
             order,
             status: 'released',
             censored: true,
-            score: 1 // Добавляем минимальный рейтинг для уменьшения выборки
+            score: 1
           }
         });
         return response.data;
@@ -78,7 +100,7 @@ export const animeApi = {
   },
 
   // Поиск аниме
-  searchAnime: async (query, page = 1, limit = 12) => {
+  searchAnime: async (query, page = 1, limit = 24) => {
     const cacheKey = `search_${query}_${page}_${limit}`;
     try {
       return await getCachedData(cacheKey, async () => {
@@ -88,8 +110,7 @@ export const animeApi = {
             page,
             limit,
             order: 'popularity',
-            censored: true,
-            score: 1
+            censored: true
           }
         });
         return response.data;
