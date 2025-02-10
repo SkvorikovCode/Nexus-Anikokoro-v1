@@ -18,6 +18,12 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [0.1.19] - 2025-02-10
+
+- Update README.md
+- feat(components): add nimeard and update nimerid components
+
 ## [0.1.18] - 2025-02-09
 
 - fix(docs): merger
