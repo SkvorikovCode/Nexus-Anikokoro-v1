@@ -7,15 +7,11 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    VueDevTools(),
-  ],
+  plugins: [vue(), vueJsx(), VueDevTools()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   server: {
     proxy: {
@@ -25,10 +21,12 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
         configure: (proxy, options) => {
           proxy.on('proxyReq', (proxyReq, req, res) => {
-            proxyReq.setHeader('User-Agent', 'NexusAnikokoro')
+            proxyReq.removeHeader('Origin')
+            proxyReq.removeHeader('Referer')
+            proxyReq.setHeader('User-Agent', 'NexusAnikokoro/1.0')
           })
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 })

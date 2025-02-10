@@ -76,7 +76,7 @@ const closeMenu = () => {
             <i class="pi pi-github text-xl"></i>
           </a>
           <a
-            href="#"
+            href="https://t.me/JustFW"
             class="p-2 text-gray-500 hover:text-gray-700"
           >
             <i class="pi pi-telegram text-xl"></i>

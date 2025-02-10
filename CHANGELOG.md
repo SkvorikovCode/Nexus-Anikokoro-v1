@@ -19,6 +19,11 @@ All notable changes to this project will be documented in this file.
 
 
 
+
+## [0.1.20] - 2025-02-10
+
+- feat(navigation): add mobile menu and improve header responsiveness
+
 ## [0.1.19] - 2025-02-10
 
 - Update README.md
