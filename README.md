@@ -1,6 +1,6 @@
 # NexusAnikokoro
 
-![NexusAnikokoro](https://img.shields.io/badge/version-0.1.9-blue.svg) ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-green.svg) ![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![NexusAnikokoro](https://img.shields.io/badge/version-0.1.9-blue.svg) ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-green.svg) <!--![License](https://img.shields.io/badge/license-MIT-blue.svg)-->
 
 Веб-приложение для просмотра информации об аниме, построенное на Vue 3 с использованием API Shikimori.
 
